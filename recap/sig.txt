@@ -1,0 +1,28 @@
+// Basic signal() function calls - older, simpler interface
+signal(SIGINT, handler_function);  // Register handler for Ctrl+C (interrupt signal)
+signal(SIGTERM, SIG_IGN);         // Ignore SIGTERM (termination request from kill command)
+signal(SIGUSR1, SIG_DFL);         // Reset SIGUSR1 to default behavior (usually terminate)
+
+// Signal set manipulation - used to group signals for operations
+sigset_t set;
+sigemptyset(&set);          // Initialize empty signal set (clear all signals)
+sigfillset(&set);           // Fill set with all possible signals in the system
+sigaddset(&set, SIGINT);    // Add SIGINT (Ctrl+C) to the signal set
+sigdelset(&set, SIGTERM);   // Remove SIGTERM from the signal set
+
+// Advanced signal handling with sigaction() - more portable and feature-rich
+struct sigaction sa;
+sa.sa_handler = handler_function;    // Set the handler function to call when signal occurs
+sigemptyset(&sa.sa_mask);           // Don't block any additional signals during handler execution
+sa.sa_flags = SA_RESTART;           // Automatically restart interrupted system calls
+sigaction(SIGINT, &sa, NULL);       // Install the signal handler (replaces simple signal() call)
+
+// Signal masking - temporarily block signals during critical sections
+sigset_t mask, oldmask;
+sigemptyset(&mask);                              // Initialize empty mask
+sigaddset(&mask, SIGINT);                       // Add SIGINT to the blocking mask
+sigprocmask(SIG_BLOCK, &mask, &oldmask);       // Block SIGINT, save previous mask
+
+// ... critical section where SIGINT interruption could cause problems ...
+
+sigprocmask(SIG_SETMASK, &oldmask, NULL);      // Restore the original signal mask

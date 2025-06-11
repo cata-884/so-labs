@@ -1,0 +1,23 @@
+void *ptr = mmap(addr, length, prot, flags, fd, offset);
+
+// Map a file to memory
+int fd = open("file.txt", O_RDWR);
+void *ptr = mmap(NULL, file_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+
+// Anonymous mapping (no file)
+void *ptr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+
+PROT_READ    // Readable
+PROT_WRITE   // Writable
+PROT_EXEC    // Executable
+PROT_NONE    // No access
+
+MAP_SHARED     // Changes visible to other processes
+MAP_PRIVATE    // Copy-on-write, changes private to process
+MAP_ANONYMOUS  // No file backing (just memory)
+MAP_FIXED      // Use exact address specified
+
+munmap(ptr, length);  // Unmap memory region
+
+msync(ptr, length, MS_SYNC);      // Force write to disk (blocking)
+msync(ptr, length, MS_ASYNC);     // Schedule write to disk (non-blocking)

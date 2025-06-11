@@ -1,0 +1,13 @@
+sem_t *sem = sem_open("/dev/shm/mysem", O_CREAT, 0644, 1);
+sem_wait(sem);
+// critical section
+sem_post(sem);
+sem_close(sem);
+sem_unlink("/my_semaphore"); // cleanup
+
+sem_t sem;
+sem_init(&sem, 0, 1); // 0 = thread-shared only
+sem_wait(&sem);
+// critical section
+sem_post(&sem);
+sem_destroy(&sem);

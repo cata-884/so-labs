@@ -1,0 +1,15 @@
+execl("/bin/ls", "ls", "-l", "/tmp", NULL);  // NULL-terminated argument list
+execl("/usr/bin/gcc", "gcc", "main.c", "-o", "program", NULL);
+
+char *args[] = {"ls", "-l", "/tmp", NULL};
+execv("/bin/ls", args);  // Array of arguments
+
+execlp("gcc", "gcc", "main.c", "-o", "program", NULL);  // Finds gcc in PATH
+char *args[] = {"python3", "script.py", NULL};
+execvp("python3", args);  // Finds python3 in PATH
+
+char *env[] = {"PATH=/usr/bin", "HOME=/tmp", NULL};
+execle("/bin/sh", "sh", "-c", "echo $HOME", NULL, env);
+execve("/bin/ls", args, env);
+
+

@@ -1,0 +1,15 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/mman.h>
+#include <sys/stat.h>
+#include <sys/wait.h>
+#include <errno.h>
+#include <signal.h>
+
+#define FIFO_NAME "/tmp/service_worker_fifo"
+#define SHM_NAME "/worker_shm"
+#define max 256
+

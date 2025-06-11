@@ -1,0 +1,4 @@
+EACCES	Acces interzis (de ex., mapare cu PROT_NONE).
+ENOMEM	Memorie insuficientă pentru operație (de ex., la mmap sau mprotect).
+ENFILE	Limita de fișiere deschise a sistemului a fost atinsă.
+EINVAL	Argument invalid (de ex., dimensiune nulă la mmap).

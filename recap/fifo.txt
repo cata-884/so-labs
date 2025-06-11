@@ -1,0 +1,8 @@
+mkfifo("/tmp/myfifo", 0666);     // Create named pipe with permissions
+
+int fd = open("/tmp/myfifo", O_RDONLY);   // Reader blocks until writer connects
+
+int fd = open("/tmp/myfifo", O_RDONLY | O_NONBLOCK);  // Don't block on open
+
+close(fd);              // Close file descriptor
+unlink("/tmp/myfifo");  // Remove FIFO from filesystem

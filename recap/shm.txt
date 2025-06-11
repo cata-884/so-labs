@@ -1,0 +1,7 @@
+int fd = shm_open("/myshm", O_CREAT | O_RDWR, 0666);  // Create shared memory object
+ftruncate(fd, size);                                   // Set size
+void *ptr = mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+
+munmap(ptr, size);        // Unmap from process
+close(fd);                // Close file descriptor
+shm_unlink("/myshm");     // Remove shared memory object
